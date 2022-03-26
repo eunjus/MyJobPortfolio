@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{93776980-266A-48D0-BD20-1012B2D9B505}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SmartViceDev</RootNamespace>
+    <AssemblyName>SmartViceDev</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>게시\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CUBRID.Data, Version=10.2.0.2, Culture=neutral, PublicKeyToken=de9d5b1064656ed6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\CUBRID.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="JETCalendar, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Users\dmswn\source\repos\JETCalendar\bin\Debug\JETCalendar.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\PresentationFramework.4.6.0\lib\PresentationFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CubridUtils\RULE_CUSTOMERMANAGEMENT.cs" />
+    <Compile Include="CubridUtils\RULE_BOOKMANAGEMENT.cs" />
+    <Compile Include="CubridUtils\RULE_GETADDRESSBOOKPOPUP.cs" />
+    <Compile Include="CubridUtils\RULE_DETAILEDSALARYMANAGEMENT.cs" />
+    <Compile Include="CubridUtils\RULE_SALARYPAPMANAGEMENT.cs" />
+    <Compile Include="CubridUtils\RULE_STAFFSALARYMANAGEMENT.cs" />
+    <Compile Include="CustomerManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerManagement.Designer.cs">
+      <DependentUpon>CustomerManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BookManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookManagement.Designer.cs">
+      <DependentUpon>BookManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GetZipNAddressPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GetZipNAddressPopup.Designer.cs">
+      <DependentUpon>GetZipNAddressPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GetAddressBookPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GetAddressBookPopup.Designer.cs">
+      <DependentUpon>GetAddressBookPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SendMailPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SendMailPopup.Designer.cs">
+      <DependentUpon>SendMailPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SmartViceMenuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SmartViceMenuForm.Designer.cs">
+      <DependentUpon>SmartViceMenuForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DetailedSalaryManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DetailedSalaryManagement.Designer.cs">
+      <DependentUpon>DetailedSalaryManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SalaryPAPManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SalaryPAPManagement.Designer.cs">
+      <DependentUpon>SalaryPAPManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StaffSalaryManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StaffSalaryManagement.Designer.cs">
+      <DependentUpon>StaffSalaryManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CubridUtils\RULE_CHARGEFOODMANAGEMENT.cs" />
+    <Compile Include="CubridUtils\RULE_SPENDINGMANAGEMENT.cs" />
+    <Compile Include="CubridUtils\RULE_NEWSTAFFREGPOPUP.cs" />
+    <Compile Include="CubridUtils\RULE_STAFFINFOMANAGEMENT.cs" />
+    <Compile Include="CubridUtils\RULE_JOBPOSITIONMANAGEMENT.cs" />
+    <Compile Include="CubridUtils\RULE_DEPARTMENTMANAGEMENT.cs" />
+    <Compile Include="CubridUtils\RULE_VACATIONSTANDARDPOPUP.cs" />
+    <Compile Include="CubridUtils\RULE_VACATIONMANAGEMENT.cs" />
+    <Compile Include="ChargeFoodManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChargeFoodManagement.Designer.cs">
+      <DependentUpon>ChargeFoodManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScanIMGFilePopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScanIMGFilePopup.Designer.cs">
+      <DependentUpon>ScanIMGFilePopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GetIMGFilePopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GetIMGFilePopup.Designer.cs">
+      <DependentUpon>GetIMGFilePopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SpendingManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpendingManagement.Designer.cs">
+      <DependentUpon>SpendingManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewStaffRegPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewStaffRegPopup.Designer.cs">
+      <DependentUpon>NewStaffRegPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StaffInfoManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StaffInfoManagement.Designer.cs">
+      <DependentUpon>StaffInfoManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JobPositionManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JobPositionManagement.Designer.cs">
+      <DependentUpon>JobPositionManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ShowVCanlendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShowVCanlendar.Designer.cs">
+      <DependentUpon>ShowVCanlendar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VacationManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VacationManagement.Designer.cs">
+      <DependentUpon>VacationManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DepartmentManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DepartmentManagement.Designer.cs">
+      <DependentUpon>DepartmentManagement.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VacationStandardPopup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="VacationStandardPopup.Designer.cs">
+      <DependentUpon>VacationStandardPopup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WIAScanner.cs" />
+    <EmbeddedResource Include="CustomerManagement.resx">
+      <DependentUpon>CustomerManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookManagement.resx">
+      <DependentUpon>BookManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GetZipNAddressPopup.resx">
+      <DependentUpon>GetZipNAddressPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GetAddressBookPopup.resx">
+      <DependentUpon>GetAddressBookPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SendMailPopup.resx">
+      <DependentUpon>SendMailPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SmartViceMenuForm.resx">
+      <DependentUpon>SmartViceMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DetailedSalaryManagement.resx">
+      <DependentUpon>DetailedSalaryManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SalaryPAPManagement.resx">
+      <DependentUpon>SalaryPAPManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaffSalaryManagement.resx">
+      <DependentUpon>StaffSalaryManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChargeFoodManagement.resx">
+      <DependentUpon>ChargeFoodManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScanIMGFilePopup.resx">
+      <DependentUpon>ScanIMGFilePopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GetIMGFilePopup.resx">
+      <DependentUpon>GetIMGFilePopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SpendingManagement.resx">
+      <DependentUpon>SpendingManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewStaffRegPopup.resx">
+      <DependentUpon>NewStaffRegPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaffInfoManagement.resx">
+      <DependentUpon>StaffInfoManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JobPositionManagement.resx">
+      <DependentUpon>JobPositionManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShowVCanlendar.resx">
+      <DependentUpon>ShowVCanlendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VacationManagement.resx">
+      <DependentUpon>VacationManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="DepartmentManagement.resx">
+      <DependentUpon>DepartmentManagement.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="VacationStandardPopup.resx">
+      <DependentUpon>VacationStandardPopup.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2%28x86 및 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WIA">
+      <Guid>{94A0E92D-43C0-494E-AC29-FD45948A5221}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
