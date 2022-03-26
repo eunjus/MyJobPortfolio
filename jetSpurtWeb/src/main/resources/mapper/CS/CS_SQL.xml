@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="cs"> 
+
+	<select id="selectBoardList" parameterType="hashmap" resultType="hashmap"> 
+
+		WITH checkRe as
+		(
+			SELECT parent_number 
+			FROM mng_noticeboard 
+			WHERE 1=1 
+				AND post_category = 'qna_reply'
+				AND delete_yn = 'n'
+		)		
+		SELECT
+			post_number,
+			A.parent_number,
+			post_category,
+			CASE WHEN a.post_number = b.parent_number THEN CONCAT('[답변완료] ',post_title)
+			ELSE post_title
+			END
+			post_title,
+			convert(post USING utf8) post,
+			post_writer,
+			writer_email,
+			post_passwd,
+			secret_yn,
+			reply_yn,
+			DATE_FORMAT(reg_dt,'%Y-%m-%d') reg_dt
+		FROM
+			mng_noticeboard A LEFT JOIN checkRe B ON a.post_number = b.parent_number
+		WHERE 1=1	
+			AND delete_yn = 'n'
+			
+		<if test="code != null">		
+			AND post_category = #{code}
+		</if>
+		
+		<if test="no != null">
+			AND post_number = #{no}
+		</if>	    
+		
+		<if test="password != null">
+			AND post_passwd = #{password}
+		</if>
+		
+		<if test="post_title != null">		
+			AND post_title LIKE CONCAT('%',#{post_title},'%')
+		</if>
+		<if test="post != null">		
+			AND post LIKE CONCAT('%',#{post},'%')
+		</if>
+		<if test="post_writer != null">		
+			AND post_writer = #{post_writer}
+		</if>	
+		
+		order by update_dt ;
+	</select>
+
+	<select id="indexBoardList" parameterType="hashmap" resultType="hashmap"> 
+
+		SELECT 
+				A.* 
+		FROM
+		(
+			SELECT 			
+				post_number,
+				post_category,
+				post_title,
+				CONVERT(post USING utf8) post,
+				post_writer,
+				writer_email,
+				post_passwd,
+				secret_yn,
+				DATE_FORMAT(reg_dt,'%Y-%m-%d') reg_dt
+			FROM
+				mng_noticeboard
+			WHERE  1=1
+				AND delete_yn = 'n'
+				AND post_category = 'notice'	
+			ORDER BY post_number desc
+			) A limit 4
+   
+		
+	</select>
+	
+	<select id="selectReply" parameterType="hashmap" resultType="hashmap"> 
+
+		SELECT
+			post_number,
+			parent_number,
+			post_category,			
+			convert(post USING utf8) post,
+			post_writer,									
+			reg_dt
+		FROM
+			mng_noticeboard
+		WHERE 1=1	
+			AND delete_yn = 'n'
+			
+		<if test="post_category != null">		
+			AND post_category = #{post_category}
+		</if>
+		
+		<if test="no != null">
+			AND parent_number = #{no}
+		</if>	    
+				
+	</select>
+	
+	<select id="selectPostFile" parameterType="hashmap" resultType="hashmap"> 
+
+		SELECT
+			file_number,
+			post_number,
+			org_file_name,
+			file_content,			
+			file_extension,
+			file_size,									
+			file_reg_dt
+		FROM
+			mng_mp_file
+		WHERE 1=1	
+			AND delete_yn = 'n'			
+		
+		<if test="no != null">
+			AND post_number = #{no}
+		</if>
+		
+		<if test="file_number != null">
+			AND file_number = #{file_number}
+		</if>	    
+					    
+				
+	</select>
+	
+	<insert id="insertBoard" parameterType="hashmap">
+			INSERT INTO mng_noticeboard 
+			(
+				post_number,
+				post_category,
+				post_title,
+				post,
+				post_writer,
+				writer_email,
+				post_passwd,
+				secret_yn,
+				reply_yn,
+				delete_yn,
+				reg_dt,
+				update_dt
+			)
+			VALUES
+				(
+				#{post_number},
+				#{code},
+				#{title},
+				#{content},
+				#{name},
+			<choose>
+				<when test="code == 'recruit'">
+					#{writer_email},
+				</when>
+				<when test="code == 'qna' or code == 'notice'"  >
+					null,
+				</when>
+			</choose> 	
+			<choose>
+				<when test="code == 'recruit' or code == 'notice'">
+					null,
+					'y',
+				</when>
+				<when test="code == 'qna'"  >
+					#{password},
+					#{is_secret},
+				</when>
+			</choose>	
+				'n',
+				'n',		 						
+				now(),
+				now()
+				
+			);
+	
+	</insert>
+	
+	<insert id="insertReply" parameterType="hashmap">
+			INSERT INTO mng_noticeboard 
+			(				
+				post_category,
+				parent_number,				
+				post,
+				post_writer,				
+				post_passwd,				
+				reg_dt,
+				delete_yn
+			)
+			VALUES
+				(
+				'qna_reply'	,
+				#{no}	,			
+				#{content},
+				'관리자',	
+				#{password},						 					
+				now(),
+				'n'				
+			);
+	
+	</insert>
+	
+	<insert id="insertFile" parameterType="hashmap">
+			INSERT INTO mng_mp_file 
+			(		
+				file_number,		
+				post_number,
+				org_file_name,				
+				file_content,
+				file_extension,				
+				file_size,				
+				file_reg_dt,
+				delete_yn,
+				file_delete_dt
+			)
+			VALUES
+				(
+				#{file_number},
+				#{post_number},
+				#{org_file_name},			
+				#{file_content},
+				#{file_extension},	
+				#{file_size},						 				
+				now(),
+				'n',
+				now()				
+			);
+	
+	</insert>
+	
+	<update id="updateRepliedQna" parameterType="hashmap">
+
+			UPDATE
+				mng_noticeboard
+			SET
+			<if test="reply_yn != null">	
+				reply_yn = #{reply_yn},
+			</if>																	
+				update_dt = now()					
+			WHERE 1=1			
+			<if test="no != null">		
+				AND post_number = #{no}
+			</if>
+		
+	</update>
+	
+	<update id="updateQna" parameterType="hashmap">
+
+			UPDATE
+				mng_noticeboard
+			SET
+			<if test="title != null">	
+				post_title = #{title},
+			</if>
+									
+			<if test="content != null">
+				post = #{content},
+			</if>
+			
+			<if test="name != null">	
+				post_writer = #{name},
+			</if>
+			
+			<if test="password != null">	
+				post_passwd = #{password},
+			</if>
+			
+			<choose>
+				<when test="is_secret != null">
+					secret_yn = #{is_secret},
+				</when>
+				<otherwise>
+					secret_yn = null,
+				</otherwise>
+			</choose>	
+			
+			update_dt = now()		 																								
+			WHERE 1=1			
+			<if test="no != null">		
+				AND post_number = #{no}
+			</if>
+			<if test="code != null">		
+				AND post_category = #{code}
+			</if>
+		
+	</update>
+	
+	<update id="updateReply" parameterType="hashmap">
+
+			UPDATE
+				mng_noticeboard
+			SET
+			<if test="content != null">	
+				post = #{content},
+			</if>																	
+				update_dt = now()													
+			WHERE 1=1			
+				AND delete_yn = 'n'	
+						
+			<if test="no != null">		
+				AND parent_number = #{no}
+			</if>						
+		
+	</update>
+	
+	<update id="updateNotice" parameterType="hashmap">
+
+			UPDATE
+				mng_noticeboard
+			SET
+			<if test="title != null">	
+				post_title = #{title},
+			</if>
+						
+			<if test="content != null">
+				post = #{content},
+			</if>
+			
+				update_dt = now()
+													
+			WHERE 1=1			
+			<if test="no != null">		
+				AND post_number = #{no}
+			</if>
+			<if test="code != null">		
+				AND post_category = #{code}
+			</if>
+		
+	</update>
+	
+	<update id="deleteBoard" parameterType="hashmap"> 	
+			
+			UPDATE mng_noticeboard 
+			SET 
+				delete_yn = 'y',
+				update_dt = now()
+			WHERE 1=1
+			<if test="code != null">		
+				AND post_category = #{code}
+			</if>
+			<if test="no != null">		
+				AND post_number = #{no}
+			</if>	
+	</update>
+	
+	<update id="deleteReply" parameterType="hashmap"> 	
+			
+			UPDATE mng_noticeboard 
+			SET 
+				delete_yn = 'y',
+				update_dt = now()
+			WHERE 1=1
+			<if test="post_category != null">		
+				AND post_category = #{post_category}
+			</if>
+			<if test="no != null">		
+				AND parent_number = #{no}
+			</if>	
+	</update>
+	
+	<update id="deleteFile" parameterType="hashmap"> 	
+			
+			UPDATE mng_mp_file 
+			SET 
+				delete_yn = 'y',
+				file_delete_dt = now()
+			WHERE 1=1
+
+			<if test="no != null">		
+				AND file_number = #{no}
+			</if>	
+			<if test="post_number != null">		
+				AND post_number = #{post_number}
+			</if>
+	</update>	
+	
+</mapper>
+

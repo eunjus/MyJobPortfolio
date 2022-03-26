@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+
+<mapper namespace="member"> 
+
+	<select id="selectUserId" parameterType="hashmap" resultType="hashmap"> 
+
+		SELECT
+			user_name,
+			user_id,
+			passwd,
+			DATE_FORMAT(birth_dt,'YYYY-MM-DD') birth_dt,
+			user_email,
+			zipcode,
+			address,
+			detail_address,
+			cel_number,
+			user_authority
+		FROM
+			mng_user
+		WHERE 1=1
+			AND withdrawal_yn = 'n'
+			
+		<if test="userid != null">		
+			AND user_id = #{userid}
+		</if>
+		
+		<if test="password != null">		
+			AND passwd = #{password}
+		</if>
+		
+		<if test="username != null">		
+			AND user_name = #{username}
+		</if>
+		<if test="email != null">		
+			AND user_email = #{email}
+		</if>
+		
+	</select>
+
+	<insert id="insertNewUser" parameterType="hashmap">
+			INSERT INTO mng_user 
+			(
+				user_name,
+				user_id,
+				passwd,
+				birth_dt,
+				user_email,
+				zipcode,
+				address,
+				detail_address,
+				cel_number,
+				user_authority,
+				withdrawal_yn
+			)
+			VALUES
+				(
+				#{name},
+				#{userid},
+				#{hashedpw},
+				#{birth},					
+				#{email},
+				CAST(#{zip} AS UNSIGNED),
+				#{address},
+				#{address2},
+				CAST(REPLACE(#{mobile},'-','') AS UNSIGNED),
+				'ROLE_USER',
+				'n'
+				
+			);
+	
+	</insert>
+	
+	<update id="updateUser" parameterType="hashmap">
+
+			UPDATE
+				mng_user
+			SET
+			<if test="name != null">	
+				user_name = #{name},
+			</if>
+			
+			<if test="password != null">
+				passwd = #{password},				
+			</if>
+							
+			<if test="birth != null">
+				birth_dt = #{birth},				
+			</if>
+						
+			<if test="email != null">	
+				user_email = #{email},
+			</if>
+						
+			<if test="zip != null">
+				zipcode = CAST(#{zip} AS UNSIGNED),
+			</if>
+						
+			<if test="address != null ">
+				address = #{address},
+			</if>
+				
+			<if test="address2 != null ">
+				detail_address = #{address2},
+			</if>	
+				
+			<if test="mobile != null">
+				cel_number = CAST(REPLACE(#{mobile},'-','') AS UNSIGNED)
+			</if>							
+			WHERE 1=1			
+			<if test="userid != null">		
+				AND user_id = #{userid}
+			</if>
+		
+	</update>
+	
+	<update id="updateUserPW" parameterType="hashmap">
+
+			UPDATE
+				mng_user
+			SET	
+			
+			<if test="password != null">
+				passwd = #{password}				
+			</if>	
+										
+			WHERE 1=1			
+			<if test="userid != null">		
+				AND user_id = #{userid}
+			</if>
+		
+	</update>
+	
+	<update id="withdrawalUser" parameterType="hashmap">
+
+			UPDATE
+				mng_user
+			SET				
+				withdrawal_yn = 'y'										
+			WHERE 1=1			
+			<if test="userid != null">		
+				AND user_id = #{userid}
+			</if>
+		
+	</update>
+	
+</mapper>
+

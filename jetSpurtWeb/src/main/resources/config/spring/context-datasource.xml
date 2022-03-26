@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+		http://www.springframework.org/schema/jdbc 
+		http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://172.30.1.18:3306/smartvicedb"/>
+		<property name="username" value="jetspurt"/>
+		<property name="password" value="jetspurt0718"/>
+	</bean>
+				
+	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="cubrid.jdbc.driver.CUBRIDDriver"/>
+		<property name="url" value="jdbc:cubrid:172.30.1.18:30000:smartvicedb:::?charset=UTF-8"/>
+		<property name="username" value="jetspurt"/>
+		<property name="password" value="jetspurt0718"/>
+		</bean> 
+	-->
+</beans>
